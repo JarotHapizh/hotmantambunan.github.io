@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Hotman Tambunan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .portfolio-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #2c3e50, #3a5998);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .description {
+            font-size: 1em;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.2s; }
+        .section:nth-child(2) { animation-delay: 0.4s; }
+        .section:nth-child(3) { animation-delay: 0.6s; }
+        .section:nth-child(4) { animation-delay: 0.8s; }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #764ba2;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .skill-card {
+            background: linear-gradient(135deg, #f8f9ff, #fff);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,20 80,80 20,80" fill="rgba(255,255,255,0.1)"/></svg>') center/50px no-repeat;
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-content h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .project-content p {
+            color: #666;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: block;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        .contact-item .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .contact-item .label {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .contact-item .value {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+
+        .edit-note {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 1px solid #ffeaa7;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            color: #856404;
+            text-align: center;
+        }
+
+        .edit-note h3 {
+            margin-bottom: 10px;
+            color: #856404;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .skills-grid,
+            .projects-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .floating-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="portfolio-card">
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="profile-image">
+                    👤
+                </div>
+                <h1>Hotman Tambunan</h1>
+                <p class="subtitle">Lulusan Ilmu Komunikasi | Data Administrator</p>
+                <p class="description">
+                    Lulusan Ilmu Komunikasi dengan pengalaman di bidang administrasi dan pengelolaan data. Terampil menggunakan Microsoft Excel dan berbagai tools analisis data untuk menciptakan sistem administrasi yang akurat serta workflow yang efisien.
+                </p>
+            </div>
+
+            <!-- Content -->
+            <div class="content">
+                <div class="edit-note">
+                    <h3>📍 Medan, Sumatera Utara</h3>
+                    <p>Portfolio profesional Hotman Tambunan - Spesialis Administrasi Data & Komunikasi</p>
+                </div>
+
+                <!-- About Section -->
+                <div class="section">
+                    <h2>Tentang Saya</h2>
+                    <p style="color: #666; font-size: 1.1em; line-height: 1.8;">
+                        Saya adalah lulusan Ilmu Komunikasi dari Universitas Medan Area dengan IPK 3.57 yang memiliki passion dalam bidang administrasi data dan pengelolaan informasi. Dengan pengalaman di berbagai sektor mulai dari retail, finansial, hingga media digital, saya telah mengembangkan kemampuan yang solid dalam Microsoft Excel, analisis data, dan komunikasi efektif.
+                        <br><br>
+                        Pengalaman saya sebagai Staff Administrasi di PT. Graha Santika Gadai dan Digital News Editor di Berita Harian Medan telah mengasah kemampuan saya dalam mengelola dokumen kompleks, membuat laporan komprehensif, dan memastikan akurasi data. Saya terampil menggunakan berbagai tools seperti Microsoft Office Suite, Power BI, SPSS, dan MYOB untuk menciptakan sistem administrasi yang efisien.
+                        <br><br>
+                        Dengan latar belakang komunikasi yang kuat dan pengalaman organisasi sebagai Koordinator divisi edukasi & sosial HIMABATO, saya mampu bekerja dalam tim, beradaptasi dengan cepat, dan memberikan hasil yang akurat untuk mendukung operasional perusahaan.
+                    </p>
+                </div>
+
+                <!-- Skills Section -->
+                <div class="section">
+                    <h2>Keahlian</h2>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <h3>💻 Technical Skills</h3>
+                            <p style="color: #666; margin-bottom: 15px;">Keahlian dalam pengolahan data dan administrasi digital</p>
+                            <div class="skill-tags">
+                                <span class="tag">Microsoft Excel</span>
+                                <span class="tag">Power BI</span>
+                                <span class="tag">SPSS</span>
+                                <span class="tag">MYOB</span>
+                            </div>
+                        </div>
+                        <div class="skill-card">
+                            <h3>🎨 Creative Skills</h3>
+                            <p style="color: #666; margin-bottom: 15px;">Kemampuan design dan editing multimedia</p>
+                            <div class="skill-tags">
+                                <span class="tag">Adobe Photoshop</span>
+                                <span class="tag">Adobe Premiere Pro</span>
+                                <span class="tag">Canva</span>
+                                <span class="tag">CapCut</span>
+                                <span class="tag">Kinemaster</span>
+                            </div>
+                        </div>
+                        <div class="skill-card">
+                            <h3>📊 Communication Skills</h3>
+                            <p style="color: #666; margin-bottom: 15px;">Keahlian komunikasi dan pengelolaan konten</p>
+                            <div class="skill-tags">
+                                <span class="tag">Content Editing</span>
+                                <span class="tag">Crisis Communication</span>
+                                <span class="tag">Digital News</span>
+                                <span class="tag">Public Relations</span>
+                            </div>
+                        </div>
+                        <div class="skill-card">
+                            <h3>🌍 Languages</h3>
+                            <p style="color: #666; margin-bottom: 15px;">Kemampuan berbahasa untuk komunikasi global</p>
+                            <div class="skill-tags">
+                                <span class="tag">Bahasa Indonesia - Native</span>
+                                <span class="tag">English - Intermediate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projects Section -->
+                <div class="section">
+                    <h2>Pengalaman Profesional</h2>
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <div class="project-image">
+                                💼
+                            </div>
+                            <div class="project-content">
+                                <h3>Staff Administrasi - PT. Graha Santika Gadai</h3>
+                                <p>Mengelola dokumen perusahaan, input data nasabah, pengarsipan sistematis, membuat daftar hadir dan gaji pegawai, menangani komunikasi telepon dengan mitra dan pelanggan, serta membuat laporan harian, mingguan dan bulanan yang komprehensif.</p>
+                                <div class="skill-tags">
+                                    <span class="tag">Data Management</span>
+                                    <span class="tag">Microsoft Excel</span>
+                                    <span class="tag">Documentation</span>
+                                    <span class="tag">Reporting</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-image">
+                                📰
+                            </div>
+                            <div class="project-content">
+                                <h3>Digital News Editor - Berita Harian Medan</h3>
+                                <p>Menyunting naskah berita, melakukan fact-checking, menjaga ketepatan waktu publikasi, memastikan kepatuhan etika jurnalistik, dan mengoptimalkan konten dengan kata kunci, gambar, serta format yang menarik untuk pembaca digital.</p>
+                                <div class="skill-tags">
+                                    <span class="tag">Content Editing</span>
+                                    <span class="tag">SEO Optimization</span>
+                                    <span class="tag">Fact Checking</span>
+                                    <span class="tag">Digital Publishing</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-image">
+                                🎓
+                            </div>
+                            <div class="project-content">
+                                <h3>Asisten Dosen - Komunikasi Krisis (UMA)</h3>
+                                <p>Membantu dosen dalam penyampaian materi Komunikasi Krisis, memastikan pembelajaran sesuai SOP, mengawasi penyelesaian tugas mahasiswa, dan memastikan pemahaman materi yang mendalam tentang manajemen krisis komunikasi.</p>
+                                <div class="skill-tags">
+                                    <span class="tag">Teaching Assistant</span>
+                                    <span class="tag">Crisis Communication</span>
+                                    <span class="tag">Academic Support</span>
+                                    <span class="tag">Student Mentoring</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education & Organization Section -->
+                <div class="section">
+                    <h2>Pendidikan & Organisasi</h2>
+                    <div class="projects-grid">
+                        <div class="project-card">
+                            <div class="project-image">
+                                🎓
+                            </div>
+                            <div class="project-content">
+                                <h3>S1 Ilmu Komunikasi - Universitas Medan Area</h3>
+                                <p><strong>2020-2024 | IPK: 3.57</strong><br>
+                                Fokus pada komunikasi massa, digital communication, dan crisis management. Aktif dalam berbagai penelitian komunikasi dan pengembangan soft skills melalui organisasi kampus.</p>
+                                <div class="skill-tags">
+                                    <span class="tag">Communication Theory</span>
+                                    <span class="tag">Digital Media</span>
+                                    <span class="tag">Research Methods</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-image">
+                                🤝
+                            </div>
+                            <div class="project-content">
+                                <h3>Koordinator Divisi Edukasi & Sosial - HIMABATO</h3>
+                                <p><strong>2022</strong><br>
+                                Mengkoordinasikan divisi untuk melakukan penggalangan dana, program bantuan korban bencana alam, kunjungan ke panti asuhan dan panti jompo, serta kegiatan gotong royong kemasyarakatan.</p>
+                                <div class="skill-tags">
+                                    <span class="tag">Leadership</span>
+                                    <span class="tag">Community Service</span>
+                                    <span class="tag">Team Coordination</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card">
+                            <div class="project-image">
+                                ⛪
+                            </div>
+                            <div class="project-content">
+                                <h3>Anggota GMKI - Universitas Medan Area</h3>
+                                <p><strong>2020</strong><br>
+                                Aktif dalam menjalankan program kerja organisasi, memastikan setiap program berjalan dengan baik, membantu dan mengawasi pelaksanaan berbagai kegiatan organisasi kemahasiswaan.</p>
+                                <div class="skill-tags">
+                                    <span class="tag">Program Management</span>
+                                    <span class="tag">Event Organization</span>
+                                    <span class="tag">Teamwork</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interests Section -->
+                <div class="section">
+                    <h2>Minat & Hobi</h2>
+                    <div class="skills-grid">
+                        <div class="skill-card">
+                            <h3>📚 Reading</h3>
+                            <p style="color: #666;">Gemar membaca buku, novel, dan artikel untuk mengembangkan wawasan dan pengetahuan</p>
+                        </div>
+                        <div class="skill-card">
+                            <h3>🎵 Music</h3>
+                            <p style="color: #666;">Bermain dan mendengarkan musik sebagai cara relaksasi dan inspirasi kreatif</p>
+                        </div>
+                        <div class="skill-card">
+                            <h3>✈️ Travelling</h3>
+                            <p style="color: #666;">Menjelajahi tempat baru untuk memperluas perspektif dan pengalaman hidup</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="section">
+                    <h2>Hubungi Saya</h2>
+                    <div class="contact-grid">
+                        <a href="mailto:hotmantambunan07@gmail.com" class="contact-item">
+                            <span class="icon">✉️</span>
+                            <div class="label">Email</div>
+                            <div class="value">hotmantambunan07@gmail.com</div>
+                        </a>
+                        <a href="https://linkedin.com/in/hotman-tambunan" class="contact-item" target="_blank">
+                            <span class="icon">💼</span>
+                            <div class="label">LinkedIn</div>
+                            <div class="value">/in/hotman-tambunan</div>
+                        </a>
+                        <a href="https://wa.me/6282162719572" class="contact-item" target="_blank">
+                            <span class="icon">📱</span>
+                            <div class="label">WhatsApp</div>
+                            <div class="value">+628 2162 719572</div>
+                        </a>
+                        <a href="#" class="contact-item">
+                            <span class="icon">📍</span>
+                            <div class="label">Location</div>
+                            <div class="value">Medan, Sumatera Utara</div>
+                        </a>
+                        <a href="#download-cv" class="contact-item">
+                            <span class="icon">📄</span>
+                            <div class="label">Download CV</div>
+                            <div class="value">PDF Format</div>
+                        </a>
+                        <a href="https://github.com/hotman-tambunan" class="contact-item" target="_blank">
+                            <span class="icon">🐙</span>
+                            <div class="label">GitHub</div>
+                            <div class="value">/hotman-tambunan</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Button -->
+    <button class="floating-btn" onclick="scrollToTop()" title="Kembali ke atas">
+        ↑
+    </button>
+
+    <script>
+        // Smooth scroll to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Show/hide floating button based on scroll position
+        window.addEventListener('scroll', function() {
+            const btn = document.querySelector('.floating-btn');
+            if (window.pageYOffset > 300) {
+                btn.style.opacity = '1';
+                btn.style.visibility = 'visible';
+            } else {
+                btn.style.opacity = '0';
+                btn.style.visibility = 'hidden';
+            }
+        });
+
+        // Add typing effect to hero title
+        document.addEventListener('DOMContentLoaded', function() {
+            const title = document.querySelector('.hero h1');
+            const text = title.textContent;
+            title.textContent = '';
+            
+            let i = 0;
+            function typeWriter() {
+                if (i < text.length) {
+                    title.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 100);
+                }
+            }
+            
+            setTimeout(typeWriter, 1000);
+        });
+
+        // Add hover effect to skill cards
+        document.querySelectorAll('.skill-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.borderLeftColor = '#764ba2';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.borderLeftColor = '#667eea';
+            });
+        });
+    </script>
+</body>
+</html>
